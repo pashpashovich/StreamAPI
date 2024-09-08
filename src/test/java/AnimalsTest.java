@@ -100,7 +100,6 @@ class AnimalsTest {
                 new Animal(47, "Tamandua, southern", 20, "Ndebele", "Male"),
                 new Animal(73, "Turtle, long-necked", 20, "Kurdish", "Female")
         );
-        System.out.println(animals);
         List<Animal> result = Main.task1(animals);
         assertEquals(expectedAnimals, result);
     }
@@ -149,21 +148,21 @@ class AnimalsTest {
 
     @Test
     void testTask8() {
-        int expectedResult=49;
+        int expectedResult = 49;
         int result = Main.task8(animals);
         assertEquals(expectedResult, result);
     }
 
     @Test
     void testTask9() {
-        int expectedResult=5;
+        int expectedResult = 5;
         int result = Main.task9(animals);
         assertEquals(expectedResult, result);
     }
 
     @Test
     void testTask10() {
-        int expectedResult=2021;
+        int expectedResult = 2021;
         int result = Main.task10(animals);
         assertEquals(expectedResult, result);
     }

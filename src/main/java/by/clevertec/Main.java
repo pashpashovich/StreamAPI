@@ -38,9 +38,9 @@ public class Main {
         task12();
         task13();
         task14();
-        task15();
-        task16();
-        task17();
+        task15(Util.getFlowers());
+        task16(Util.getStudents());
+        task17(Util.getStudents());
         task18();
         task19();
         task20();
@@ -49,6 +49,7 @@ public class Main {
     }
 
     public static List<Animal> task1(List<Animal> animals) {
+        System.out.println("Task 1");
         List<Animal> myAnimals = animals.stream()
                 .filter(animal -> animal.getAge() >= 10 && animal.getAge() <= 20)
                 .sorted(Comparator.comparing(Animal::getAge))
@@ -61,6 +62,7 @@ public class Main {
     }
 
     public static List<String> task2(List<Animal> animals) {
+        System.out.println("Task 2");
         List<String> breedOfAnimals = animals.stream()
                 .filter(animal -> animal.getOrigin().equalsIgnoreCase("Japanese"))
                 .map(animal -> {
@@ -75,6 +77,7 @@ public class Main {
     }
 
     public static List<String> task3(List<Animal> animals) {
+        System.out.println("Task 3");
         List<String> countries = animals.stream()
                 .filter(animal -> animal.getAge() > 30)
                 .<String>mapMulti((x, consumer) -> {
@@ -89,6 +92,7 @@ public class Main {
     }
 
     public static long task4(List<Animal> animals) {
+        System.out.println("Task 4");
         long females =
                 animals.stream()
                         .filter(animal -> animal.getGender().equalsIgnoreCase("Female"))
@@ -98,6 +102,7 @@ public class Main {
     }
 
     public static boolean task5(List<Animal> animals) {
+        System.out.println("Task 5");
         boolean isThereHungarian =
                 animals.stream()
                         .filter(animal -> animal.getAge() >= 20 && animal.getAge() <= 30)
@@ -107,6 +112,7 @@ public class Main {
     }
 
     public static boolean task6(List<Animal> animals) {
+        System.out.println("Task 6");
         boolean isAllMaleAndFemale =
                 animals.stream()
                         .allMatch(animal -> animal.getGender().equals("Male") || animal.getGender().equalsIgnoreCase("Female"));
@@ -115,6 +121,7 @@ public class Main {
     }
 
     public static boolean task7(List<Animal> animals) {
+        System.out.println("Task 7");
         boolean isNoneFromOceania =
                 animals.stream()
                         .noneMatch(animal -> animal.getOrigin().equals("Oceania"));
@@ -123,6 +130,7 @@ public class Main {
     }
 
     public static int task8(List<Animal> animals) {
+        System.out.println("Task 8");
         int maxAge =
                 animals.stream()
                         .sorted(Comparator.comparing(Animal::getBread))
@@ -135,6 +143,7 @@ public class Main {
     }
 
     public static int task9(List<Animal> animals) {
+        System.out.println("Task 9");
         int minLengthofBreed =
                 animals.stream()
                         .map(Animal::getBread)
@@ -147,6 +156,7 @@ public class Main {
     }
 
     public static int task10(List<Animal> animals) {
+        System.out.println("Task 10");
         int totalAge =
                 animals.stream()
                         .mapToInt(Animal::getAge)
@@ -156,6 +166,7 @@ public class Main {
     }
 
     public static double task11(List<Animal> animals) {
+        System.out.println("Task 11");
         double averageAgeFromIndonesia =
                 animals.stream()
                         .filter(animal -> animal.getOrigin().equalsIgnoreCase("Indonesian"))
@@ -167,6 +178,7 @@ public class Main {
     }
 
     public static void task12() {
+        System.out.println("Task 12");
         List<Person> persons = Util.getPersons();
         persons.stream()
                 .filter(person -> person.getGender().equalsIgnoreCase("Male"))
@@ -180,6 +192,7 @@ public class Main {
     }
 
     public static void task13() {
+        System.out.println("Task 13");
         List<House> houses = Util.getHouses();
         houses.stream()
                 .flatMap(house -> house.getPersonList().stream()
@@ -203,6 +216,7 @@ public class Main {
     }
 
     public static void task14() {
+        System.out.println("Task 14");
         List<Car> cars = Util.getCars();
         double costPerTon = 7.14;
         double[] tierMasses = new double[6];
@@ -245,38 +259,54 @@ public class Main {
         System.out.println("Общая выручка логистической компании: $" + totalRevenue);
     }
 
-    public static void task15() {
+    public static double task15(List<Flower> flowers) {
+        System.out.println("Task 15");
         double waterCostPerCubicMeter = 1.39;
-        List<Flower> flowers = Util.getFlowers();
-        System.out.println(flowers.stream()
-                .sorted(Comparator.comparing(Flower::getOrigin).reversed()
-                        .thenComparing(Flower::getPrice)
-                        .thenComparing(Flower::getWaterConsumptionPerDay).reversed())
-                .filter(flower -> flower.getCommonName().toUpperCase().compareTo("C") <= 0 ||
-                        flower.getCommonName().toUpperCase().compareTo("S") >= 0)
-                .filter(Flower::isShadePreferred)
-                .filter(flower -> flower.getFlowerVaseMaterial().contains("Glass") || flower.getFlowerVaseMaterial().contains("Aluminum") ||
-                        flower.getFlowerVaseMaterial().contains("Steel"))
-                .mapToDouble(flower -> flower.getPrice() + flower.getWaterConsumptionPerDay() * 5 * 365 * waterCostPerCubicMeter)
-                .sum());
+        double result =
+                flowers.stream()
+                        .sorted(Comparator.comparing(Flower::getOrigin).reversed()
+                                .thenComparing(Flower::getPrice)
+                                .thenComparing(Flower::getWaterConsumptionPerDay).reversed())
+                        .filter(flower -> flower.getCommonName().toUpperCase().compareTo("C") <= 0 ||
+                                flower.getCommonName().toUpperCase().compareTo("S") >= 0)
+                        .filter(Flower::isShadePreferred)
+                        .filter(flower -> flower.getFlowerVaseMaterial().contains("Glass") || flower.getFlowerVaseMaterial().contains("Aluminum") ||
+                                flower.getFlowerVaseMaterial().contains("Steel"))
+                        .mapToDouble(flower -> flower.getPrice() + flower.getWaterConsumptionPerDay() * (4 * 365 + 366) * waterCostPerCubicMeter)
+                        .sum();
+        System.out.println("Общая стоимость обслуживания всех растений: " + result + "$");
+        return result;
     }
 
-    public static void task16() {
-        List<Student> students = Util.getStudents();
-        students.stream()
-                .filter(student -> student.getAge() <= 18) // младше 18 лет студентов нет
-                .sorted(Comparator.comparing(Student::getSurname)).forEach(student -> System.out.println(student.getSurname() + " " + student.getAge()));
+    public static List<Student> task16(List<Student> students) {
+        System.out.println("Task 16");
+        List<Student> studentsUnder18 =
+                students.stream()
+                        .filter(student -> student.getAge() < 18)
+                        .sorted(Comparator.comparing(Student::getSurname))
+                        .toList();
+        System.out.println("Студенты младше 18 лет в алфавитном порядке: ");
+        if (studentsUnder18.isEmpty()) System.out.println("Таких нет(");
+        for (Student student : studentsUnder18)
+            System.out.println(student.getSurname() + " " + student.getAge());
+        return studentsUnder18;
     }
 
-    public static void task17() {
-        List<Student> students = Util.getStudents();
-        students.stream()
-                .map(Student::getGroup)
-                .distinct()
-                .forEach(System.out::println);
+    public static List<String> task17(List<Student> students) {
+        System.out.println("Task 17");
+        List<String> groups =
+                students.stream()
+                        .map(Student::getGroup)
+                        .distinct()
+                        .toList();
+        System.out.println("Список групп");
+        for (String group : groups)
+            System.out.println(group);
+        return groups;
     }
 
     public static void task18() {
+        System.out.println("Task 18");
         List<Student> students = Util.getStudents();
         Map<String, Double> averageAgeByFaculty = students.stream()
                 .collect(Collectors.groupingBy(Student::getFaculty,
@@ -287,6 +317,7 @@ public class Main {
     }
 
     public static void task19() {
+        System.out.println("Task 19");
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
         List<String> groups = Util.getStudents().stream()
@@ -315,6 +346,7 @@ public class Main {
     }
 
     public static void task20() {
+        System.out.println("Task 20");
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
         System.out.println("Факультет с максимальной средней оценкой по первому экзамену:");
@@ -331,6 +363,7 @@ public class Main {
     }
 
     public static void task21() {
+        System.out.println("Task 21");
         List<Student> students = Util.getStudents();
         students.stream()
                 .collect((Collectors.groupingBy(
@@ -341,6 +374,7 @@ public class Main {
     }
 
     public static void task22() {
+        System.out.println("Task 22");
         List<Student> students = Util.getStudents();
         students.stream()
                 .collect(Collectors.groupingBy(
