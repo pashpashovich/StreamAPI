@@ -1,6 +1,5 @@
 import by.clevertec.Main;
 import by.clevertec.model.Animal;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,11 +8,11 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class Task1Test {
+class AnimalsTest {
     private static List<Animal> animals;
 
-    @BeforeAll
-    static void setUp() {
+    @BeforeEach
+    void setUp() {
         animals = Arrays.asList(
                 new Animal(2, "Antelope, roan", 29, "Spanish", "Male"),
                 new Animal(3, "Tern, arctic", 28, "Oriya", "Male"),
@@ -105,4 +104,75 @@ class Task1Test {
         List<Animal> result = Main.task1(animals);
         assertEquals(expectedAnimals, result);
     }
+
+    @Test
+    void testTask2() {
+        List<String> expectedBreeds = Arrays.asList("HURON");
+        List<String> result = Main.task2(animals);
+        assertEquals(expectedBreeds, result);
+    }
+
+    @Test
+    void testTask3() {
+        List<String> expectedCountries = Arrays.asList("Azeri", "Aymara", "Afrikaans", "Arabic");
+        List<String> result = Main.task3(animals);
+        assertEquals(expectedCountries, result);
+    }
+
+    @Test
+    void testTask4() {
+        int expectedFemales = 31;
+        long result = Main.task4(animals);
+        assertEquals(expectedFemales, result);
+    }
+
+    @Test
+    void testTask5() {
+        boolean expectedResult = true;
+        boolean result = Main.task5(animals);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testTask6() {
+        boolean expectedResult = false;
+        boolean result = Main.task6(animals);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testTask7() {
+        boolean expectedResult = true;
+        boolean result = Main.task7(animals);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testTask8() {
+        int expectedResult=49;
+        int result = Main.task8(animals);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testTask9() {
+        int expectedResult=5;
+        int result = Main.task9(animals);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testTask10() {
+        int expectedResult=2021;
+        int result = Main.task10(animals);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    void testTask11() {
+        double expectedAge = 3.5;
+        double result = Main.task11(animals);
+        assertEquals(expectedAge, result);
+    }
+
 }

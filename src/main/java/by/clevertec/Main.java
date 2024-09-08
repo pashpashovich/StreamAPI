@@ -14,7 +14,7 @@ import java.time.Period;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 
@@ -24,28 +24,28 @@ public class Main {
     private static final int PENSION_AGE_WOMEN = 58;
 
     public static void main(String[] args) {
-//        task1(Util.getAnimals());
-//        task2(Util.getAnimals());
-//        task3();
-//          task4();
-//        task5();
-//        task6();
-//        task7();
-//        task8();
-//          task9();
-        task10();
-//        task11();
-//        task12();
-//        task13();
-//        task14();
-//        task15();
-//        task16();
-//        task17();
-//        task18();
-//        task19();
-//        task20();
-//        task21();
-//        task22();
+        task1(Util.getAnimals());
+        task2(Util.getAnimals());
+        task3(Util.getAnimals());
+        task4(Util.getAnimals());
+        task5(Util.getAnimals());
+        task6(Util.getAnimals());
+        task7(Util.getAnimals());
+        task8(Util.getAnimals());
+        task9(Util.getAnimals());
+        task10(Util.getAnimals());
+        task11(Util.getAnimals());
+        task12();
+        task13();
+        task14();
+        task15();
+        task16();
+        task17();
+        task18();
+        task19();
+        task20();
+        task21();
+        task22();
     }
 
     public static List<Animal> task1(List<Animal> animals) {
@@ -69,85 +69,114 @@ public class Main {
                     return breed;
                 })
                 .toList();
+        System.out.println("Породы:");
         for (String breed : breedOfAnimals) System.out.println(breed);
         return breedOfAnimals;
     }
 
-    public static void task3() {
-        List<Animal> animals = Util.getAnimals();
-        animals.stream()
+    public static List<String> task3(List<Animal> animals) {
+        List<String> countries = animals.stream()
                 .filter(animal -> animal.getAge() > 30)
-                .mapMulti((x, consumer) -> {
+                .<String>mapMulti((x, consumer) -> {
                     if (x.getOrigin().startsWith("A")) consumer.accept(x.getOrigin());
                 })
                 .distinct()
-                .forEach(System.out::println);
+                .toList();
+        System.out.println("Страны");
+        for (String country : countries)
+            System.out.println(country);
+        return countries;
     }
 
-    public static void task4() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .filter(animal -> animal.getGender().equalsIgnoreCase("Female"))
-                .count());
+    public static long task4(List<Animal> animals) {
+        long females =
+                animals.stream()
+                        .filter(animal -> animal.getGender().equalsIgnoreCase("Female"))
+                        .count();
+        System.out.println("Количество животных Female: " + females);
+        return females;
     }
 
-    public static void task5() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .filter(animal -> animal.getAge() >= 20 && animal.getAge() <= 30)
-                .anyMatch(animal -> animal.getOrigin().equalsIgnoreCase("Hungarian")));
+    public static boolean task5(List<Animal> animals) {
+        boolean isThereHungarian =
+                animals.stream()
+                        .filter(animal -> animal.getAge() >= 20 && animal.getAge() <= 30)
+                        .anyMatch(animal -> animal.getOrigin().equalsIgnoreCase("Hungarian"));
+        System.out.println("Есть ли венгерские животные: " + isThereHungarian);
+        return isThereHungarian;
     }
 
-    public static void task6() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .allMatch(animal -> animal.getGender().equals("Male") || animal.getGender().equals("Female")));
+    public static boolean task6(List<Animal> animals) {
+        boolean isAllMaleAndFemale =
+                animals.stream()
+                        .allMatch(animal -> animal.getGender().equals("Male") || animal.getGender().equalsIgnoreCase("Female"));
+        System.out.println("Все male и female? " + isAllMaleAndFemale);
+        return isAllMaleAndFemale;
     }
 
-    public static void task7() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .noneMatch(animal -> animal.getOrigin().equals("Oceania")));
+    public static boolean task7(List<Animal> animals) {
+        boolean isNoneFromOceania =
+                animals.stream()
+                        .noneMatch(animal -> animal.getOrigin().equals("Oceania"));
+        System.out.println("Никого из Oceania? " + isNoneFromOceania);
+        return isNoneFromOceania;
     }
 
-    public static void task8() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .sorted(Comparator.comparing(Animal::getBread))
-                .limit(100)
-                .mapToInt(Animal::getAge)
-                .max()
-                .orElse(0));
+    public static int task8(List<Animal> animals) {
+        int maxAge =
+                animals.stream()
+                        .sorted(Comparator.comparing(Animal::getBread))
+                        .limit(100)
+                        .mapToInt(Animal::getAge)
+                        .max()
+                        .orElse(0);
+        System.out.println("Возраст самого старого животного: " + maxAge);
+        return maxAge;
     }
 
-    public static void task9() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .map(Animal::getBread)
-                .map(String::toCharArray)
-                .mapToInt(chars -> chars.length)
-                .min()
-                .orElse(0));
+    public static int task9(List<Animal> animals) {
+        int minLengthofBreed =
+                animals.stream()
+                        .map(Animal::getBread)
+                        .map(String::toCharArray)
+                        .mapToInt(chars -> chars.length)
+                        .min()
+                        .orElse(0);
+        System.out.println("Самое короткое название породы имеет " + minLengthofBreed + " символов.");
+        return minLengthofBreed;
     }
 
-    public static void task10() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream()
-                .mapToInt(Animal::getAge)
-                .sum());
+    public static int task10(List<Animal> animals) {
+        int totalAge =
+                animals.stream()
+                        .mapToInt(Animal::getAge)
+                        .sum();
+        System.out.println("Cуммарный возраст всех животных " + totalAge);
+        return totalAge;
     }
 
-    public static void task11() {
-        List<Animal> animals = Util.getAnimals();
-        System.out.println(animals.stream().filter(animal -> animal.getOrigin().equalsIgnoreCase("Indonesian")).mapToInt(Animal::getAge).average().orElse(0));
+    public static double task11(List<Animal> animals) {
+        double averageAgeFromIndonesia =
+                animals.stream()
+                        .filter(animal -> animal.getOrigin().equalsIgnoreCase("Indonesian"))
+                        .mapToInt(Animal::getAge)
+                        .average()
+                        .orElse(0);
+        System.out.println("Средний возраст животных из Indonesia: " + averageAgeFromIndonesia);
+        return averageAgeFromIndonesia;
     }
 
     public static void task12() {
         List<Person> persons = Util.getPersons();
-        persons.stream().filter(person -> person.getGender().equalsIgnoreCase("Male")).filter(person -> {
-            int age = Period.between(person.getDateOfBirth(), LocalDate.now()).getYears();
-            return age >= 18 && age <= 27;
-        }).sorted(Comparator.comparing(Person::getRecruitmentGroup).reversed()).limit(200).forEach(System.out::println);
+        persons.stream()
+                .filter(person -> person.getGender().equalsIgnoreCase("Male"))
+                .filter(person -> {
+                    int age = Period.between(person.getDateOfBirth(), LocalDate.now()).getYears();
+                    return age >= 18 && age <= 27;
+                })
+                .sorted(Comparator.comparing(Person::getRecruitmentGroup))
+                .limit(200)
+                .forEach(System.out::println);
     }
 
     public static void task13() {
@@ -176,49 +205,36 @@ public class Main {
     public static void task14() {
         List<Car> cars = Util.getCars();
         double costPerTon = 7.14;
-        List<Car> firstTier = cars.stream()
-                .filter(car -> car.getCarMake().equalsIgnoreCase("Jaguar") || car.getColor().equalsIgnoreCase("white"))
-                .toList();
-        List<Car> remainingCars = cars.stream()
-                .filter(car -> !firstTier.contains(car))
-                .collect(Collectors.toList());
-        List<Car> secondTier = remainingCars.stream()
-                .filter(car -> car.getMass() < 1500 &&
-                        (car.getCarMake().equalsIgnoreCase("BMW") || car.getCarMake().equalsIgnoreCase("Lexus") ||
-                                car.getCarMake().equalsIgnoreCase("Chrysler")) || car.getCarMake().equalsIgnoreCase("Toyota "))
-                .toList();
-        remainingCars.removeAll(secondTier);
-
-        List<Car> thirdTier = remainingCars.stream()
-                .filter(car -> (car.getColor().equalsIgnoreCase("black") && car.getMass() > 4000) ||
-                        car.getCarMake().equalsIgnoreCase("GMC") || car.getCarMake().equalsIgnoreCase("Dodge "))
-                .toList();
-        remainingCars.removeAll(thirdTier);
-        List<Car> fourthTier = remainingCars.stream()
-                .filter(car -> car.getReleaseYear() < 1982 || car.getCarModel().equalsIgnoreCase("Civic") || car.getCarModel().equalsIgnoreCase("Cherokee"))
-                .toList();
-        remainingCars.removeAll(fourthTier);
-        List<Car> fifthTier = remainingCars.stream()
-                .filter(car -> (!"Yellow".equals(car.getColor()) && !"Red".equals(car.getColor()) &&
-                        !"Green".equals(car.getColor()) && !"Blue".equals(car.getColor())) ||
-                        car.getPrice() > 40000)
-                .toList();
-        remainingCars.removeAll(fifthTier);
-        List<Car> sixthTier = remainingCars.stream()
-                .filter(car -> car.getVin().contains("59"))
-                .toList();
-        double firstTierMass = firstTier.stream().mapToDouble(Car::getMass).sum() / 1000.0;
-        double secondTierMass = secondTier.stream().mapToDouble(Car::getMass).sum() / 1000.0;
-        double thirdTierMass = thirdTier.stream().mapToDouble(Car::getMass).sum() / 1000.0;
-        double fourthTierMass = fourthTier.stream().mapToDouble(Car::getMass).sum() / 1000.0;
-        double fifthTierMass = fifthTier.stream().mapToDouble(Car::getMass).sum() / 1000.0;
-        double sixthTierMass = sixthTier.stream().mapToDouble(Car::getMass).sum() / 1000.0;
-        double firstTierCost = firstTierMass * costPerTon;
-        double secondTierCost = secondTierMass * costPerTon;
-        double thirdTierCost = thirdTierMass * costPerTon;
-        double fourthTierCost = fourthTierMass * costPerTon;
-        double fifthTierCost = fifthTierMass * costPerTon;
-        double sixthTierCost = sixthTierMass * costPerTon;
+        double[] tierMasses = new double[6];
+        cars.stream()
+                .forEach(car -> {
+                    if (car.getCarMake().equalsIgnoreCase("Jaguar") ||
+                            car.getColor().equalsIgnoreCase("White")) {
+                        tierMasses[0] += car.getMass();
+                    } else if (car.getMass() < 1500 &&
+                            (car.getCarMake().equalsIgnoreCase("BMW") || car.getCarMake().equalsIgnoreCase("Lexus") ||
+                                    car.getCarMake().equalsIgnoreCase("Chrysler") || car.getCarMake().equalsIgnoreCase("Toyota"))) {
+                        tierMasses[1] += car.getMass();
+                    } else if ((car.getColor().equalsIgnoreCase("Black") && car.getMass() > 4000) ||
+                            car.getCarMake().equalsIgnoreCase("GMC") || car.getCarMake().equalsIgnoreCase("Dodge")) {
+                        tierMasses[2] += car.getMass();
+                    } else if (car.getReleaseYear() < 1982 ||
+                            car.getCarModel().equalsIgnoreCase("Civic") || car.getCarModel().equalsIgnoreCase("Cherokee")) {
+                        tierMasses[3] += car.getMass();
+                    } else if (!"Yellow".equalsIgnoreCase(car.getColor()) && !"Red".equalsIgnoreCase(car.getColor()) &&
+                            !"Green".equalsIgnoreCase(car.getColor()) && !"Blue".equalsIgnoreCase(car.getColor()) ||
+                            car.getPrice() > 40000) {
+                        tierMasses[4] += car.getMass();
+                    } else if (car.getVin().contains("59")) {
+                        tierMasses[5] += car.getMass();
+                    }
+                });
+        double firstTierCost = (tierMasses[0] / 1000.0) * costPerTon;
+        double secondTierCost = (tierMasses[1] / 1000.0) * costPerTon;
+        double thirdTierCost = (tierMasses[2] / 1000.0) * costPerTon;
+        double fourthTierCost = (tierMasses[3] / 1000.0) * costPerTon;
+        double fifthTierCost = (tierMasses[4] / 1000.0) * costPerTon;
+        double sixthTierCost = (tierMasses[5] / 1000.0) * costPerTon;
         System.out.println("1. Туркменистан: $" + firstTierCost);
         System.out.println("2. Узбекистан: $" + secondTierCost);
         System.out.println("3. Казахстан: $" + thirdTierCost);
@@ -230,60 +246,97 @@ public class Main {
     }
 
     public static void task15() {
+        double waterCostPerCubicMeter = 1.39;
         List<Flower> flowers = Util.getFlowers();
         System.out.println(flowers.stream()
                 .sorted(Comparator.comparing(Flower::getOrigin).reversed()
-                        .thenComparing(Flower::getPrice).reversed()
+                        .thenComparing(Flower::getPrice)
                         .thenComparing(Flower::getWaterConsumptionPerDay).reversed())
-                .filter(flower -> flower.getCommonName().startsWith("S") &&
-                        flower.getCommonName().endsWith("C"))
+                .filter(flower -> flower.getCommonName().toUpperCase().compareTo("C") <= 0 ||
+                        flower.getCommonName().toUpperCase().compareTo("S") >= 0)
                 .filter(Flower::isShadePreferred)
                 .filter(flower -> flower.getFlowerVaseMaterial().contains("Glass") || flower.getFlowerVaseMaterial().contains("Aluminum") ||
                         flower.getFlowerVaseMaterial().contains("Steel"))
-                .mapToDouble(flower -> flower.getPrice() + flower.getWaterConsumptionPerDay() * (5 * 365) * 0.8)
+                .mapToDouble(flower -> flower.getPrice() + flower.getWaterConsumptionPerDay() * 5 * 365 * waterCostPerCubicMeter)
                 .sum());
     }
 
     public static void task16() {
         List<Student> students = Util.getStudents();
-        students.stream().filter(student -> student.getAge() <= 18) // младше 18 лет студентов нет
+        students.stream()
+                .filter(student -> student.getAge() <= 18) // младше 18 лет студентов нет
                 .sorted(Comparator.comparing(Student::getSurname)).forEach(student -> System.out.println(student.getSurname() + " " + student.getAge()));
     }
 
     public static void task17() {
         List<Student> students = Util.getStudents();
-        students.stream().map(Student::getGroup).distinct().forEach(System.out::println);
+        students.stream()
+                .map(Student::getGroup)
+                .distinct()
+                .forEach(System.out::println);
     }
 
     public static void task18() {
         List<Student> students = Util.getStudents();
-        Map<String, Double> averageAgeByFaculty = students.stream().collect(Collectors.groupingBy(Student::getFaculty, Collectors.averagingInt(Student::getAge)));
-        averageAgeByFaculty.entrySet().stream().sorted((entry1, entry2) -> Double.compare(entry2.getValue(), entry1.getValue())).forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
-
+        Map<String, Double> averageAgeByFaculty = students.stream()
+                .collect(Collectors.groupingBy(Student::getFaculty,
+                        Collectors.averagingInt(Student::getAge)));
+        averageAgeByFaculty.entrySet().stream()
+                .sorted((entry1, entry2) -> Double.compare(entry2.getValue(), entry1.getValue()))
+                .forEach(entry -> System.out.println(entry.getKey() + ": " + entry.getValue()));
     }
 
     public static void task19() {
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
-        Map<Integer, Student> studentsInGroupC3 = students.stream().filter(student -> student.getGroup().equals("C-3")).collect(Collectors.toMap(Student::getId, student -> student));
-        Set<Integer> passedExam3StudentIds = examinations.stream().filter(exam -> studentsInGroupC3.containsKey(exam.getStudentId()) && exam.getExam3() > 4).map(Examination::getStudentId).collect(Collectors.toSet());
-        studentsInGroupC3.values().stream().filter(student -> passedExam3StudentIds.contains(student.getId())).forEach(System.out::println);
+        List<String> groups = Util.getStudents().stream()
+                .map(Student::getGroup)
+                .distinct().toList();
+        String group;
+        while (true) {
+            System.out.println("Введите номер группы: ");
+            Scanner sсanner = new Scanner(System.in);
+            try {
+                group = sсanner.next();
+                if (groups.contains(group)) break;
+                else System.out.println("Неверный номер группы... Повторите попытку");
+            } catch (NumberFormatException e) {
+                System.out.println("Неверный ввод... Повторите попытку");
+
+            }
+        }
+        String finalGroup = group;
+        students.stream()
+                .filter(student -> student.getGroup().equals(finalGroup))
+                .filter(student -> examinations.stream().anyMatch(
+                        examination -> examination.getStudentId() == student.getId()
+                                && examination.getExam3() > 4))
+                .forEach(System.out::println);
     }
 
     public static void task20() {
         List<Student> students = Util.getStudents();
         List<Examination> examinations = Util.getExaminations();
-        Map<String, Double> averageExam1ByFaculty = students.stream().collect(Collectors.groupingBy(Student::getFaculty, Collectors.averagingDouble(student -> {
-            return examinations.stream().filter(exam -> exam.getStudentId() == student.getId()).mapToInt(Examination::getExam1).average().orElse(0);
-        })));
-        averageExam1ByFaculty.entrySet().stream().max(Map.Entry.comparingByValue()).ifPresent(System.out::println);
-
+        System.out.println("Факультет с максимальной средней оценкой по первому экзамену:");
+        Map<String, Double> averageExam1ByFaculty = students.stream()
+                .collect(Collectors.groupingBy(Student::getFaculty, Collectors.averagingDouble(student -> examinations.stream()
+                        .filter(exam -> exam.getStudentId() == student.getId())
+                        .mapToInt(Examination::getExam1)
+                        .average()
+                        .orElse(0))));
+        averageExam1ByFaculty.entrySet().stream()
+                .max(Map.Entry.comparingByValue())
+                .map(Map.Entry::getKey)
+                .ifPresent(System.out::println);
     }
 
     public static void task21() {
         List<Student> students = Util.getStudents();
         students.stream()
-                .collect((Collectors.groupingBy(Student::getGroup, Collectors.counting())))
+                .collect((Collectors.groupingBy(
+                        Student::getGroup,
+                        Collectors.counting()
+                )))
                 .forEach((group, num) -> System.out.println("Номер группы: " + group + " " + " количество: " + num + "."));
     }
 
@@ -298,7 +351,7 @@ public class Main {
                     if (optionalStudent.isPresent()) {
                         System.out.println("Факультет: " + faculty + ", минимальный возраст: " + optionalStudent.get().getAge() + ".");
                     } else {
-                        System.out.println("Факультет: " + faculty + ", данных о студентах нет.");
+                        System.out.println("Факультет: " + faculty + ", данных о студентах нет");
                     }
                 });
     }
